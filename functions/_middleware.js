@@ -280,12 +280,10 @@ const mpidMiddleware = async ({request, env, next}) => {
       const apiKey = env[`${brand}_KEY`];
       const apiToken = env[`${brand}_TOK`];
       const endpoint = env.ENDPOINT;
-      // let HTML = await response.text();
-      // HTML = replaceLink(HTML, linkPlaceholder, filterParameters.mpid);
+      let HTML = await response.text();
+      HTML = await replaceLink(HTML, linkPlaceholder, filterParameters.mpid);
 
-      // response = new Response(HTML, {
-      //   headers: response.headers,
-      // });
+      response = new Response(HTML, response);
 
       // response.headers.set('x-endpoint', endpoint);
       // response.headers.set('x-token', apiToken);
