@@ -271,7 +271,7 @@ const mpidMiddleware = async ({request, env, next}) => {
   const inputUrl = new URL(request.url);
   const filterParameters = urlParameters(inputUrl);
   
-  try {
+  //try {
     let response = await next();
 
     if (filterParameters.hasParams && filterParameters.mpid.length) {
@@ -287,11 +287,11 @@ const mpidMiddleware = async ({request, env, next}) => {
         headers: response.headers,
       });
 
-      response.headers.set('x-endpoint', endpoint);
-      response.headers.set('x-token', apiToken);
-      response.headers.set('x-key', apiKey);
-      response.headers.set('x-store', storeId);
-      response.headers.set('x-brand', brand);
+      // response.headers.set('x-endpoint', endpoint);
+      // response.headers.set('x-token', apiToken);
+      // response.headers.set('x-key', apiKey);
+      // response.headers.set('x-store', storeId);
+      // response.headers.set('x-brand', brand);
 
       return new HTMLRewriter()
         .on(
@@ -316,12 +316,12 @@ const mpidMiddleware = async ({request, env, next}) => {
     });
 
     return response;
-  } catch (error) {
-    return new Response(`Error: ${error}`, {
-      status: 500,
-      statusText: "Internal Server Error",
-    })
-  }
+  // } catch (error) {
+  //   return new Response(`Error: ${error}`, {
+  //     status: 500,
+  //     statusText: "Internal Server Error",
+  //   })
+  // }
 };
 
 export const onRequest = [mpidMiddleware];
