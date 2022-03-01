@@ -287,6 +287,12 @@ const mpidMiddleware = async ({request, env, next}) => {
         headers: response.headers,
       });
 
+      response.headers.set('x-endpoint', endpoint);
+      response.headers.set('x-token', apiToken);
+      response.headers.set('x-key', apiKey);
+      response.headers.set('x-store', storeId);
+      response.headers.set('x-brand', brand);
+
       return new HTMLRewriter()
         .on(
           `div#cloudflare_${brand.toLowerCase()}_container_placeholder`,
