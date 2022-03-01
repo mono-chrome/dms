@@ -312,11 +312,12 @@ const mpidMiddleware = async ({request, env, next}) => {
     let HTML = await response.text();
     // HTML = HTML.replace(linkPlaceholder, '');
 
-    response = new Response(HTML, {
-      headers: response.headers,
-    });
+    // response = new Response(HTML, {
+    //   headers: response.headers,
+    // });
 
-    return response;
+    return new Response(HTML);
+    // return response;
   // } catch (error) {
   //   return new Response(`Error: ${error}`, {
   //     status: 500,
