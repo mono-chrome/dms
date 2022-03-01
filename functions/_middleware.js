@@ -73,7 +73,7 @@ const getStoregroupId = (inputUrl, brand) => {
   const tlds = BRANDS[store].TLD;
 
   for (const [tld, sgid] of Object.entries(tlds)) {
-    if (host.includes(tld.toLowerCase())) {
+    if (host.includes(tld.toLowerCase()) && !host.includes('.dev')) {
       return sgid;
     }
   }
