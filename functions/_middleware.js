@@ -274,49 +274,46 @@ const mpidMiddleware = async ({request, env, next}) => {
   //try {
     let response = await next();
 
-    // if (filterParameters.hasParams && filterParameters.mpid.length) {
-    //   const brand = getBrand(inputUrl);
-    //   const storeId = getStoregroupId(inputUrl, brand);
-    //   const apiKey = env[`${brand}_KEY`];
-    //   const apiToken = env[`${brand}_TOK`];
-    //   const endpoint = env.ENDPOINT;
-    //   let HTML = await response.text();
-    //   HTML = replaceLink(HTML, linkPlaceholder, filterParameters.mpid);
+    if (filterParameters.hasParams && filterParameters.mpid.length) {
+      const brand = getBrand(inputUrl);
+      const storeId = getStoregroupId(inputUrl, brand);
+      const apiKey = env[`${brand}_KEY`];
+      const apiToken = env[`${brand}_TOK`];
+      const endpoint = env.ENDPOINT;
+      // let HTML = await response.text();
+      // HTML = replaceLink(HTML, linkPlaceholder, filterParameters.mpid);
 
-    //   response = new Response(HTML, {
-    //     headers: response.headers,
-    //   });
-    //   console.log(response)
+      // response = new Response(HTML, {
+      //   headers: response.headers,
+      // });
 
-    //   // response.headers.set('x-endpoint', endpoint);
-    //   // response.headers.set('x-token', apiToken);
-    //   // response.headers.set('x-key', apiKey);
-    //   // response.headers.set('x-store', storeId);
-    //   // response.headers.set('x-brand', brand);
+      // response.headers.set('x-endpoint', endpoint);
+      // response.headers.set('x-token', apiToken);
+      // response.headers.set('x-key', apiKey);
+      // response.headers.set('x-store', storeId);
+      // response.headers.set('x-brand', brand);
 
-    //   return new HTMLRewriter()
-    //     .on(
-    //       `div#cloudflare_${brand.toLowerCase()}_container_placeholder`,
-    //       new UserElementHandler({
-    //         productId: filterParameters.mpid,
-    //         brand: brand,
-    //         sgId: storeId,
-    //         apiToken: apiToken,
-    //         apiKey: apiKey,
-    //         endpoint: endpoint,
-    //       })
-    //     )
-    //     .transform(response);
-    // }
+      return new HTMLRewriter()
+        .on(
+          `div#cloudflare_${brand.toLowerCase()}_container_placeholder`,
+          new UserElementHandler({
+            productId: filterParameters.mpid,
+            brand: brand,
+            sgId: storeId,
+            apiToken: apiToken,
+            apiKey: apiKey,
+            endpoint: endpoint,
+          })
+        )
+        .transform(response);
+    }
 
-    let HTML = await response.text();
-    let tempHeaders = await response.headers;
-    console.log(tempHeaders)
+    // let HTML = await response.text();
     // HTML = HTML.replace(linkPlaceholder, '');
 
-    response = new Response(HTML, {
-      headers: tempHeaders,
-    });
+    // response = new Response(HTML, {
+    //   headers: response.headers,
+    // });
 
     return response;
   // } catch (error) {
